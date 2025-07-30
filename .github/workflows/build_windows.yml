@@ -16,8 +16,18 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2 # Устанавливаем Flutter SDK
         with:
-          flutter-version: '3.32.8' # Укажи здесь версию Flutter, которую ты используешь 
+          flutter-version: '3.32.8' # Укажи здесь точную версию Flutter, которую ты используешь
           channel: 'stable' # Или 'beta', 'master' если нужно
+
+      # НОВОЕ: Изменяем рабочую директорию на корень проекта Flutter
+      - name: Change to Flutter project directory
+        run: cd todo_list_app # <--- ИЗМЕНИ ЭТУ СТРОКУ, если имя твоего проекта другое
+        # Если твой проект находится в корне репозитория, но называется иначе,
+        # например, sales_analytics_app, то здесь должно быть `cd sales_analytics_app`
+        # Если проект прямо в корне репозитория (т.е. pubspec.yaml прямо в корне репо),
+        # то этот шаг может быть не нужен, или нужно будет указать `cd .`
+        # НО: Обычно GitHub Actions клонирует репо в папку с именем репо,
+        # поэтому `cd todo_list_app` (если это имя твоего проекта) часто нужно.
 
       - name: Get Flutter dependencies
         run: flutter pub get # Получаем зависимости проекта
