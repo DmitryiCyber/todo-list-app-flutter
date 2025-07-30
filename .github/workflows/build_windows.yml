@@ -1,0 +1,36 @@
+name: Build Flutter Windows App
+
+on:
+  push:
+    branches:
+      - main # Запускать этот workflow при каждом push в ветку main
+
+jobs:
+  build:
+    runs-on: windows-latest # Запускаем на виртуальной машине с последней версией Windows
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Клонируем репозиторий
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2 # Устанавливаем Flutter SDK
+        with:
+          flutter-version: '3.32.8' # Укажи здесь версию Flutter, которую ты используешь 
+          channel: 'stable' # Или 'beta', 'master' если нужно
+
+      - name: Get Flutter dependencies
+        run: flutter pub get # Получаем зависимости проекта
+
+      - name: Enable Windows Desktop support (if not already enabled)
+        run: flutter config --enable-windows-desktop # Убеждаемся, что Windows support включен
+
+      - name: Build Windows Release
+        run: flutter build windows --release # Собираем релизную версию для Windows
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-release-build # Название артефакта
+          path: build/windows/x64/release/runner # Путь к сгенерированным файлам Windows
+          retention-days: 7 # Хранить артефакт 7 дней
