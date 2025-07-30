@@ -16,7 +16,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2 # Устанавливаем Flutter SDK
         with:
-          flutter-version: '3.38.2' # Укажи здесь точную версию Flutter, которую ты используешь
+          flutter-version: '3.32.8' # Укажи здесь точную версию Flutter, которую ты используешь
           channel: 'stable'
 
       # Теперь используем 'working-directory' для каждого шага
